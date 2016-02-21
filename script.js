@@ -14,15 +14,15 @@
   body.insertBefore(checkerBoardEl, document.getElementsByTagName('script')[0]);
 
   var checkerBoardContainer = document.getElementById('checkerBoardContainer');
-      checkerBoardContainer.style.height = window.innerHeight + 'px';
+      // checkerBoardContainer.style.height = window.innerHeight + 'px';
       checkerBoardContainer.style.position = 'relative';
 
   // create div factory
   function newDiv(color){
     var newDiv = document.createElement('div');
 
-    newDiv.style.height = "100%";
-    newDiv.style.width = "10%";
+    newDiv.style.paddingBottom = "11.1%";
+    newDiv.style.width = "11.1%";
     newDiv.style.boxSizing = "border-box";
     newDiv.style.background = color;
     newDiv.style.border = "1px solid black";
@@ -31,33 +31,29 @@
     return newDiv;
   }
 
+  var blockColor = 'black';
   // create a new row of divs
   function newRow(){
     var nRow = document.createElement('div');
     nRow.className = "row";
-    nRow.style.height = "10%";
+    nRow.style.paddingBottom = "11.1%";
 
     checkerBoardContainer.appendChild(nRow);
 
-    for (var i = 0; i < 20; i++) {
 
-      if(i < 10) {
-        if(i%2 === 0 ){
-          nRow.appendChild(newDiv('red'));
-        } else {
-          nRow.appendChild(newDiv('black'));
-        }
-      } else {
-        if(i%2 === 0 ){
-          nRow.appendChild(newDiv('black'));
-        } else {
-          nRow.appendChild(newDiv('red'));
-        }
+    for (var i = 0; i < 9; i++) {
+      if( blockColor == 'black') {
+        blockColor = 'red';
+      } else if(blockColor == 'red') {
+        blockColor = 'black';
       }
+       nRow.appendChild(newDiv(blockColor));
+
     }
   }
 
   // populate checkerboard
-  for (var i = 0; i < 5; i++) {
+  // for (var i = 0; i < 5; i++) {
+  while(checkerBoardContainer.offsetHeight < window.innerHeight) {
     newRow();
    }
