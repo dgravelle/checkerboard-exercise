@@ -25,7 +25,7 @@
     newBlock.style.width = "11.1%";
     newBlock.style.boxSizing = "border-box";
     newBlock.style.background = `rgb(${color[0]},${color[1]},${color[2]})`;
-    newBlock.style.border = "1px solid black";
+    // newBlock.style.border = "1px solid white";
     newBlock.style.float = "left";
 
     return newBlock;
@@ -36,11 +36,22 @@
   var secondaryColor = randomColor();
 
   // update colors
-  function updateColors(primaryArr,secondaryArr) {
-    
+  function increaseBlue(a,b,i) {
+
+    // var diff = Number((a[1] / 255).toFixed(2));
+    if(a){
+      a[1]+=8
+      return a;
+    }
+    if(b) {
+      b[1]+=8
+      return b;
+    }
   }
 
   // var blockColor = 'black';
+
+  var colorToggle = true;
   // create a new row of divs
   function newRow(){
 
@@ -51,16 +62,22 @@
     checkerBoardContainer.appendChild(nRow);
 
     for (var i = 0; i < 9; i++) {
-      if( blockColor == 'black') {
-        blockColor = 'red';
-        nRow.appendChild(newBlock());
-      } else if(blockColor == 'red') {
-        blockColor = 'black';
+
+      if( colorToggle ) {
+        increaseBlue(primaryColor);
+        nRow.appendChild(newBlock(primaryColor));
+        colorToggle = !colorToggle;
+      } else {
+        increaseBlue(secondaryColor);
+        nRow.appendChild(newBlock(secondaryColor));
+        colorToggle = !colorToggle;
       }
     }
   }
 
-  // color generator
+  // console.log(blockColor);
+
+// color generator
   function randomColor(){
 
     function randomRGBNumber() {
