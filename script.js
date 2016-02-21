@@ -13,47 +13,70 @@
 
   body.insertBefore(checkerBoardEl, document.getElementsByTagName('script')[0]);
 
+  // store checkerBoardContainer
   var checkerBoardContainer = document.getElementById('checkerBoardContainer');
-      // checkerBoardContainer.style.height = window.innerHeight + 'px';
       checkerBoardContainer.style.position = 'relative';
 
   // create div factory
-  function newDiv(color){
-    var newDiv = document.createElement('div');
+  function newBlock(color){
+    var newBlock = document.createElement('div');
 
-    newDiv.style.paddingBottom = "11.1%";
-    newDiv.style.width = "11.1%";
-    newDiv.style.boxSizing = "border-box";
-    newDiv.style.background = color;
-    newDiv.style.border = "1px solid black";
-    newDiv.style.float = "left";
+    newBlock.style.paddingBottom = "11.1%";
+    newBlock.style.width = "11.1%";
+    newBlock.style.boxSizing = "border-box";
+    newBlock.style.background = `rgb(${color[0]},${color[1]},${color[2]})`;
+    newBlock.style.border = "1px solid black";
+    newBlock.style.float = "left";
 
-    return newDiv;
+    return newBlock;
   }
 
-  var blockColor = 'black';
+  // Colors to init gradient
+  var primaryColor = randomColor();
+  var secondaryColor = randomColor();
+
+  // update colors
+  function updateColors(primaryArr,secondaryArr) {
+    
+  }
+
+  // var blockColor = 'black';
   // create a new row of divs
   function newRow(){
+
     var nRow = document.createElement('div');
-    nRow.className = "row";
-    nRow.style.paddingBottom = "11.1%";
+      nRow.className = "row";
+      nRow.style.paddingBottom = "11.1%";
 
     checkerBoardContainer.appendChild(nRow);
-
 
     for (var i = 0; i < 9; i++) {
       if( blockColor == 'black') {
         blockColor = 'red';
+        nRow.appendChild(newBlock());
       } else if(blockColor == 'red') {
         blockColor = 'black';
       }
-       nRow.appendChild(newDiv(blockColor));
-
     }
   }
 
+  // color generator
+  function randomColor(){
+
+    function randomRGBNumber() {
+      return Math.floor(Math.random()*255);
+    }
+
+    var r = randomRGBNumber();
+    var g = randomRGBNumber();
+    var b = randomRGBNumber();
+
+    return [r,g,b];
+  }
+
+
+
   // populate checkerboard
-  // for (var i = 0; i < 5; i++) {
   while(checkerBoardContainer.offsetHeight < window.innerHeight) {
     newRow();
    }
