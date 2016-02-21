@@ -20,7 +20,7 @@
   // create div factory
   function newBlock(color){
     var newBlock = document.createElement('div');
-
+    newBlock.className = 'block';
     newBlock.style.paddingBottom = "11.1%";
     newBlock.style.width = "11.1%";
     newBlock.style.boxSizing = "border-box";
@@ -33,23 +33,21 @@
 
   // Colors to init gradient
   var primaryColor = randomColor();
-  var secondaryColor = randomColor();
+  // var secondaryColor = randomColor();
 
   // update colors
-  function increaseBlue(a,b,i) {
-
-    // var diff = Number((a[1] / 255).toFixed(2));
-    if(a){
-      a[1]+=8
-      return a;
-    }
-    if(b) {
-      b[1]+=8
-      return b;
-    }
-  }
-
-  // var blockColor = 'black';
+  // function increaseBlue(a,b,i) {
+  //
+  //   // var diff = Number((a[1] / 255).toFixed(2));
+  //   if(a){
+  //     a[1]+=8
+  //     return a;
+  //   }
+  //   if(b) {
+  //     b[1]+=8
+  //     return b;
+  //   }
+  // }
 
   var colorToggle = true;
   // create a new row of divs
@@ -62,20 +60,18 @@
     checkerBoardContainer.appendChild(nRow);
 
     for (var i = 0; i < 9; i++) {
-
-      if( colorToggle ) {
-        increaseBlue(primaryColor);
-        nRow.appendChild(newBlock(primaryColor));
-        colorToggle = !colorToggle;
-      } else {
-        increaseBlue(secondaryColor);
-        nRow.appendChild(newBlock(secondaryColor));
-        colorToggle = !colorToggle;
-      }
+    //
+    //   if( colorToggle ) {
+    //     increaseBlue(primaryColor);
+        nRow.appendChild(newBlock(randomColor()));
+    //     colorToggle = !colorToggle;
+    //   } else {
+    //     increaseBlue(secondaryColor);
+    //     nRow.appendChild(newBlock(secondaryColor));
+    //     colorToggle = !colorToggle;
+    //   }
     }
   }
-
-  // console.log(blockColor);
 
 // color generator
   function randomColor(){
@@ -91,9 +87,29 @@
     return [r,g,b];
   }
 
-
-
   // populate checkerboard
   while(checkerBoardContainer.offsetHeight < window.innerHeight) {
     newRow();
    }
+
+  var blocks =  document.getElementsByClassName('block');
+
+var changeBlocksId;
+
+function startColorChange(){
+  changeBlocksId = window.setTimeout(startColorChange,2000);
+  for (var i = 0; i < blocks.length; i++) {
+    blocks[i].style.background = "rgb(" + randomColor().join(',') + ")";
+  }
+
+};
+
+var stop = function(){
+  window.clearTimeout(changeBlocksId);
+}
+
+startColorChange();
+
+body.addEventListener('click',function(){
+  stop();
+});
