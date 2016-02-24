@@ -1,6 +1,7 @@
 // Your JS goes here
 
   var body = document.getElementsByTagName('body')[0];
+
   body.style.height = window.innerHeight + 'px';
   body.style.margin = '0';
 
@@ -24,7 +25,9 @@
     newBlock.style.paddingBottom = "11.1%";
     newBlock.style.width = "11.1%";
     newBlock.style.boxSizing = "border-box";
-    newBlock.style.background = `rgb(${color[0]},${color[1]},${color[2]})`;
+    // Need to update the rest of this file with ES6 for the linter to work
+    // newBlock.style.background = `rgb(${color[0]},${color[1]},${color[2]})`;
+    newBlock.style.background = 'rgb(' + color[0] + ',' + color[0] + ',' + color[0] + ')';
     // newBlock.style.border = "1px solid white";
     newBlock.style.float = "left";
 
@@ -92,7 +95,7 @@
     newRow();
    }
 
-  var blocks =  document.getElementsByClassName('block');
+var blocks =  document.getElementsByClassName('block');
 
 var changeBlocksId;
 
