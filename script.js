@@ -1,34 +1,33 @@
+(function() {
+  'use strict';
 // Your JS goes here
 
   var body = document.getElementsByTagName('body')[0];
-  body.style.height = window.innerHeight + 'px';
+  var checkerBoardEl = document.createElement('div');
+  var checkerBoardContainer;
   body.style.margin = '0';
 
-  // get windows height
-  var winHeight = window.innerHeight;
+  // init checkerboard elements
 
-  // init checkerboard
-  var checkerBoardEl = document.createElement('div');
-      checkerBoardEl.id = "checkerBoardContainer";
+  checkerBoardEl.id = "checkerBoardContainer";
 
   body.insertBefore(checkerBoardEl, document.getElementsByTagName('script')[0]);
 
-  var checkerBoardContainer = document.getElementById('checkerBoardContainer');
-      // checkerBoardContainer.style.height = window.innerHeight + 'px';
-      checkerBoardContainer.style.position = 'relative';
+  checkerBoardContainer = document.getElementById('checkerBoardContainer');
+  checkerBoardContainer.style.position = 'relative';
 
   // create div factory
-  function newDiv(color){
-    var newDiv = document.createElement('div');
+  function createBlock(color){
+    var newBlock = document.createElement('div');
 
-    newDiv.style.paddingBottom = "11.1%";
-    newDiv.style.width = "11.1%";
-    newDiv.style.boxSizing = "border-box";
-    newDiv.style.background = color;
-    newDiv.style.border = "1px solid black";
-    newDiv.style.float = "left";
+    newBlock.style.paddingBottom = "11.1%";
+    newBlock.style.width = "11.1%";
+    newBlock.style.boxSizing = "border-box";
+    newBlock.style.background = color;
+    newBlock.style.border = "1px solid black";
+    newBlock.style.float = "left";
 
-    return newDiv;
+    return newBlock;
   }
 
   var blockColor = 'black';
@@ -40,15 +39,13 @@
 
     checkerBoardContainer.appendChild(nRow);
 
-
     for (var i = 0; i < 9; i++) {
       if( blockColor == 'black') {
         blockColor = 'red';
       } else if(blockColor == 'red') {
         blockColor = 'black';
       }
-       nRow.appendChild(newDiv(blockColor));
-
+       nRow.appendChild(createBlock(blockColor));
     }
   }
 
@@ -57,3 +54,4 @@
   while(checkerBoardContainer.offsetHeight < window.innerHeight) {
     newRow();
    }
+})()
