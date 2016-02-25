@@ -1,5 +1,5 @@
-// Your JS goes here
-
+(function(){
+  'use strict'
   var body = document.getElementsByTagName('body')[0];
   body.style.height = window.innerHeight + 'px';
   body.style.margin = '0';
@@ -25,7 +25,6 @@
     newBlock.style.width = "11.1%";
     newBlock.style.boxSizing = "border-box";
     newBlock.style.background = `rgb(${color[0]},${color[1]},${color[2]})`;
-    // newBlock.style.border = "1px solid white";
     newBlock.style.float = "left";
 
     return newBlock;
@@ -37,8 +36,6 @@
 
   // update colors
   function increaseBlue(a,b,i) {
-
-    // var diff = Number((a[1] / 255).toFixed(2));
     if(a){
       a[1]+=8
       return a;
@@ -48,8 +45,6 @@
       return b;
     }
   }
-
-  // var blockColor = 'black';
 
   var colorToggle = true;
   // create a new row of divs
@@ -73,11 +68,9 @@
         colorToggle = !colorToggle;
       }
     }
-  }
+  };
 
-  // console.log(blockColor);
-
-// color generator
+  // color generator
   function randomColor(){
 
     function randomRGBNumber() {
@@ -89,11 +82,10 @@
     var b = randomRGBNumber();
 
     return [r,g,b];
-  }
-
-
+  };
 
   // populate checkerboard
   while(checkerBoardContainer.offsetHeight < window.innerHeight) {
     newRow();
-   }
+  };
+})();
