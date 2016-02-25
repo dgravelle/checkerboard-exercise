@@ -1,118 +1,85 @@
-// Your JS goes here
+(function() {
+  'use strict';
+
+  // Your JS goes here
 
   var body = document.getElementsByTagName('body')[0];
+  var checkerBoardEl;
+  var checkerBoardContainer;
+  var blocks;
+  var changeBlocksId;
+  var randomColor = function() {
+    var randomRGBNumber = function() {
+      return Math.floor(Math.random() * 255);
+    };
+
+    randomRGBNumber();
+    var red = randomRGBNumber();
+    var green = randomRGBNumber();
+    var blue = randomRGBNumber();
+
+    return [red, green, blue];
+  };
+  var startColorChange = function() {
+    changeBlocksId = window.setTimeout(startColorChange, 2000);
+    for (var i = 0; i < blocks.length; i++) {
+      blocks[i].style.background = 'rgb(' + randomColor().join(',') + ')';
+    }
+  };
+  var stopChange = function() {
+    window.clearTimeout(changeBlocksId);
+  };
 
   body.style.height = window.innerHeight + 'px';
   body.style.margin = '0';
 
-  // get windows height
-  var winHeight = window.innerHeight;
-
   // init checkerboard
-  var checkerBoardEl = document.createElement('div');
-      checkerBoardEl.id = "checkerBoardContainer";
+  checkerBoardEl = document.createElement('div');
+  checkerBoardEl.id = 'checkerBoardContainer';
 
   body.insertBefore(checkerBoardEl, document.getElementsByTagName('script')[0]);
 
   // store checkerBoardContainer
-  var checkerBoardContainer = document.getElementById('checkerBoardContainer');
-      checkerBoardContainer.style.position = 'relative';
+  checkerBoardContainer = document.getElementById('checkerBoardContainer');
+  checkerBoardContainer.style.position = 'relative';
 
   // create div factory
-  function newBlock(color){
+  var createBlock = function(color) {
     var newBlock = document.createElement('div');
+
     newBlock.className = 'block';
-    newBlock.style.paddingBottom = "11.1%";
-    newBlock.style.width = "11.1%";
-    newBlock.style.boxSizing = "border-box";
-    // Need to update the rest of this file with ES6 for the linter to work
-    // newBlock.style.background = `rgb(${color[0]},${color[1]},${color[2]})`;
-    newBlock.style.background = 'rgb(' + color[0] + ',' + color[0] + ',' + color[0] + ')';
-    // newBlock.style.border = "1px solid white";
-    newBlock.style.float = "left";
-
+    newBlock.style.paddingBottom = '11.1%';
+    newBlock.style.width = '11.1%';
+    newBlock.style.boxSizing = 'border-box';
+    newBlock.style.background = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+    newBlock.style.float = 'left';
     return newBlock;
-  }
+  };
 
-  // Colors to init gradient
-  var primaryColor = randomColor();
-  // var secondaryColor = randomColor();
-
-  // update colors
-  // function increaseBlue(a,b,i) {
-  //
-  //   // var diff = Number((a[1] / 255).toFixed(2));
-  //   if(a){
-  //     a[1]+=8
-  //     return a;
-  //   }
-  //   if(b) {
-  //     b[1]+=8
-  //     return b;
-  //   }
-  // }
-
-  var colorToggle = true;
   // create a new row of divs
-  function newRow(){
-
+  var newRow = function() {
     var nRow = document.createElement('div');
-      nRow.className = "row";
-      nRow.style.paddingBottom = "11.1%";
+
+    nRow.className = 'row';
+    nRow.style.paddingBottom = '11.1%';
 
     checkerBoardContainer.appendChild(nRow);
 
     for (var i = 0; i < 9; i++) {
-    //
-    //   if( colorToggle ) {
-    //     increaseBlue(primaryColor);
-        nRow.appendChild(newBlock(randomColor()));
-    //     colorToggle = !colorToggle;
-    //   } else {
-    //     increaseBlue(secondaryColor);
-    //     nRow.appendChild(newBlock(secondaryColor));
-    //     colorToggle = !colorToggle;
-    //   }
+      nRow.appendChild(createBlock(randomColor()));
     }
-  }
+  };
 
-// color generator
-  function randomColor(){
-
-    function randomRGBNumber() {
-      return Math.floor(Math.random()*255);
-    }
-
-    var r = randomRGBNumber();
-    var g = randomRGBNumber();
-    var b = randomRGBNumber();
-
-    return [r,g,b];
-  }
+  blocks = document.getElementsByClassName('block');
 
   // populate checkerboard
-  while(checkerBoardContainer.offsetHeight < window.innerHeight) {
+  while (checkerBoardContainer.offsetHeight < window.innerHeight) {
     newRow();
-   }
-
-var blocks =  document.getElementsByClassName('block');
-
-var changeBlocksId;
-
-function startColorChange(){
-  changeBlocksId = window.setTimeout(startColorChange,2000);
-  for (var i = 0; i < blocks.length; i++) {
-    blocks[i].style.background = "rgb(" + randomColor().join(',') + ")";
   }
 
-};
+  startColorChange();
 
-var stop = function(){
-  window.clearTimeout(changeBlocksId);
-}
-
-startColorChange();
-
-body.addEventListener('click',function(){
-  stop();
-});
+  body.addEventListener('click', function() {
+    stopChange();
+  });
+})();
