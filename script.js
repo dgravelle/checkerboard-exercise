@@ -1,15 +1,17 @@
 (function() {
   'use strict';
-// Your JS goes here
+
+  // Your JS goes here
 
   var body = document.getElementsByTagName('body')[0];
   var checkerBoardEl = document.createElement('div');
   var checkerBoardContainer;
+
   body.style.margin = '0';
 
   // init checkerboard elements
 
-  checkerBoardEl.id = "checkerBoardContainer";
+  checkerBoardEl.id = 'checkerBoardContainer';
 
   body.insertBefore(checkerBoardEl, document.getElementsByTagName('script')[0]);
 
@@ -17,41 +19,44 @@
   checkerBoardContainer.style.position = 'relative';
 
   // create div factory
-  function createBlock(color){
+  var createBlock = function(color) {
     var newBlock = document.createElement('div');
 
-    newBlock.style.paddingBottom = "11.1%";
-    newBlock.style.width = "11.1%";
-    newBlock.style.boxSizing = "border-box";
+    newBlock.style.paddingBottom = '11.1%';
+    newBlock.style.width = '11.1%';
+    newBlock.style.boxSizing = 'border-box';
     newBlock.style.background = color;
-    newBlock.style.border = "1px solid black";
-    newBlock.style.float = "left";
+    newBlock.style.border = '1px solid black';
+    newBlock.style.float = 'left';
 
     return newBlock;
-  }
+  };
 
   var blockColor = 'black';
+
   // create a new row of divs
-  function newRow(){
+  var newRow = function() {
     var nRow = document.createElement('div');
-    nRow.className = "row";
-    nRow.style.paddingBottom = "11.1%";
+
+    nRow.className = 'row';
+    nRow.style.paddingBottom = '11.1%';
 
     checkerBoardContainer.appendChild(nRow);
 
     for (var i = 0; i < 9; i++) {
-      if( blockColor == 'black') {
+      if (blockColor === 'black') {
         blockColor = 'red';
-      } else if(blockColor == 'red') {
+      }
+      else if (blockColor === 'red') {
         blockColor = 'black';
       }
-       nRow.appendChild(createBlock(blockColor));
+      nRow.appendChild(createBlock(blockColor));
     }
-  }
+  };
 
   // populate checkerboard
   // for (var i = 0; i < 5; i++) {
-  while(checkerBoardContainer.offsetHeight < window.innerHeight) {
+  while (checkerBoardContainer.offsetHeight < window.innerHeight) {
     newRow();
-   }
-})()
+  }
+})();
