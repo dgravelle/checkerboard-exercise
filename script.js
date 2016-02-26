@@ -1,91 +1,69 @@
-(function(){
-  'use strict'
+(function() {
+  'use strict';
+
   var body = document.getElementsByTagName('body')[0];
-  body.style.height = window.innerHeight + 'px';
-  body.style.margin = '0';
-
-  // get windows height
-  var winHeight = window.innerHeight;
-
-  // init checkerboard
-  var checkerBoardEl = document.createElement('div');
-      checkerBoardEl.id = "checkerBoardContainer";
-
-  body.insertBefore(checkerBoardEl, document.getElementsByTagName('script')[0]);
-
-  // store checkerBoardContainer
-  var checkerBoardContainer = document.getElementById('checkerBoardContainer');
-      checkerBoardContainer.style.position = 'relative';
-
-  // create div factory
-  function newBlock(color){
-    var newBlock = document.createElement('div');
-
-    newBlock.style.paddingBottom = "11.1%";
-    newBlock.style.width = "11.1%";
-    newBlock.style.boxSizing = "border-box";
-    newBlock.style.background = `rgb(${color[0]},${color[1]},${color[2]})`;
-    newBlock.style.float = "left";
-
-    return newBlock;
+  var createEl = function(element) {
+    return document.createElement(element);
   }
+  var checkerBoardEl = document.createElement('div');
+  var checkerBoardContainer;
+  var randomColor = function() {
+    var randomRGBNumber = function() {
+      return Math.floor(Math.random() * 255);
+    };
 
-  // Colors to init gradient
+    var red = randomRGBNumber();
+    var green = randomRGBNumber();
+    var blue = randomRGBNumber();
+
+    return [red, green, blue];
+  };
+  var increaseBlue = function(color) {
+    if (color) {
+      color[1] += 8;
+    }
+  };
   var primaryColor = randomColor();
   var secondaryColor = randomColor();
-
-  // update colors
-  function increaseBlue(a,b,i) {
-    if(a){
-      a[1]+=8
-      return a;
-    }
-    if(b) {
-      b[1]+=8
-      return b;
-    }
-  }
-
   var colorToggle = true;
-  // create a new row of divs
-  function newRow(){
+  var createBlock = function(color) {
+    var newBlock = createEl('div');
 
+    newBlock.style.paddingBottom = '11.1%';
+    newBlock.style.width = '11.1%';
+    newBlock.style.float = 'left';
+    newBlock.style.background = 'rgb(' + color.join(',').toString() + ')';
+
+    return newBlock;
+  };
+  var newRow = function() {
     var nRow = document.createElement('div');
-      nRow.className = "row";
-      nRow.style.paddingBottom = "11.1%";
+
+    nRow.className = 'row';
+    nRow.style.paddingBottom = '11.1%';
 
     checkerBoardContainer.appendChild(nRow);
 
     for (var i = 0; i < 9; i++) {
-
-      if( colorToggle ) {
+      if (colorToggle) {
         increaseBlue(primaryColor);
-        nRow.appendChild(newBlock(primaryColor));
+        nRow.appendChild(createBlock(primaryColor));
         colorToggle = !colorToggle;
-      } else {
+      }
+      else {
         increaseBlue(secondaryColor);
-        nRow.appendChild(newBlock(secondaryColor));
+        nRow.appendChild(createBlock(secondaryColor));
         colorToggle = !colorToggle;
       }
     }
   };
 
-  // color generator
-  function randomColor(){
+  checkerBoardEl.id = 'checkerBoardContainer';
+  body.insertBefore(checkerBoardEl, document.getElementsByTagName('script')[0]);
 
-    function randomRGBNumber() {
-      return Math.floor(Math.random()*255);
-    }
+  checkerBoardContainer = document.getElementById('checkerBoardContainer');
 
-    var r = randomRGBNumber();
-    var g = randomRGBNumber();
-    var b = randomRGBNumber();
-
-    return [r,g,b];
-  };
-
-  // populate checkerboard
-  while(checkerBoardContainer.offsetHeight < window.innerHeight) {
+  while (checkerBoardContainer.offsetHeight < window.innerHeight) {
     newRow();
-  };
+  }
 })();
